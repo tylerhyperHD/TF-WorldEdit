@@ -48,6 +48,7 @@ import com.sk89q.worldedit.world.World;
 import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.world.block.BlockState;
 import com.sk89q.worldedit.world.block.BlockType;
+import me.totalfreedom.worldedit.WorldEditHandler;
 import com.sk89q.worldedit.world.block.BlockTypes;
 import com.sk89q.worldedit.world.block.FuzzyBlockState;
 import com.sk89q.worldedit.world.entity.EntityType;
@@ -427,6 +428,17 @@ public class DefaultBlockParser extends InputParser<BaseBlock> {
                 throw new DisallowedUsageException(TranslatableComponent.of("worldedit.error.disallowed-block", TextComponent.of(input)));
             }
         }
+
+        // TFM start
+        if (context.isRestricted()) {
+            Actor actor = context.requireActor();
+            if (actor instanceof Player
+                    && worldEdit.getConfiguration().disallowedBlocks.contains(blockType.id())
+                    && !WorldEditHandler.isSuperAdmin((Player) actor)) {
+                throw new DisallowedUsageException(TranslatableComponent.of("worldedit.error.disallowed-block", TextComponent.of(input)));
+            }
+        }
+        // TFM end
 
         BaseBlock baseBlock = state.toBaseBlock(blockNbtData == null ? null : LazyReference.computed(blockNbtData));
 
