@@ -111,7 +111,8 @@ tasks.register<Jar>("jar") {
         // Exclude worldedit-core
         exclude {
             val pathString = it.relativePath.pathString
-            pathString.startsWith("com/sk89q/worldedit/") && !pathString.startsWith("com/sk89q/worldedit/neoforge/")
+            (pathString.startsWith("com/sk89q/worldedit/") && !pathString.startsWith("com/sk89q/worldedit/neoforge/")) ||
+                pathString.startsWith("me/totalfreedom/worldedit/")
         }
         // Questionable excludes. So far the two files from each jar are the same.
         exclude("defaults/worldedit.properties")

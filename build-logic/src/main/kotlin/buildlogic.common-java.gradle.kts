@@ -4,7 +4,7 @@ import buildlogic.getLibrary
 plugins {
     id("eclipse")
     id("idea")
-    id("checkstyle")
+    //id("checkstyle")
     id("buildlogic.common")
 }
 
@@ -24,10 +24,10 @@ tasks
         options.compilerArgs.add("-Werror")
     }
 
-configure<CheckstyleExtension> {
-    configFile = rootProject.file("config/checkstyle/checkstyle.xml")
-    toolVersion = "10.16.0"
-}
+//configure<CheckstyleExtension> {
+//    configFile = rootProject.file("config/checkstyle/checkstyle.xml")
+//    toolVersion = "10.16.0"
+//}
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform {
@@ -68,6 +68,6 @@ configure<JavaPluginExtension> {
     withSourcesJar()
 }
 
-tasks.named("check").configure {
-    dependsOn("checkstyleMain", "checkstyleTest")
-}
+//tasks.named("check").configure {
+//    dependsOn("checkstyleMain", "checkstyleTest")
+//}

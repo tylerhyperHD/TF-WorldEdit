@@ -10,12 +10,41 @@ configurations {
     register("languageFiles")
 }
 
+repositories {
+    mavenLocal()
+    maven { url = uri("https://hub.spigotmc.org/nexus/content/groups/public") }
+    maven { url = uri("https://repo.codemc.org/repository/maven-public/") }
+    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
+    maven {
+        name = "EngineHub"
+        url = uri("https://maven.enginehub.org/repo/")
+    }
+    ivy {
+        url = uri("https://repo.enginehub.org/language-files/")
+        name = "EngineHub Language Files"
+        patternLayout {
+            artifact("[organisation]/[module]/[revision]/[artifact]-[revision](+[classifier])(.[ext])")
+            setM2compatible(true)
+        }
+        metadataSources {
+            artifact()
+        }
+        content {
+            includeModuleByRegex(".*", "worldedit-lang")
+        }
+    }
+}
+
 dependencies {
     constraints {
         "implementation"(libs.snakeyaml) {
             because("Bukkit provides SnakeYaml")
         }
     }
+    "compileOnly"("org.spigotmc:spigot:1.21.10-R0.1-SNAPSHOT") {
+        exclude("junit", "junit")
+    }
+    "compileOnly"("org.spigotmc:spigot-api:1.21.10-R0.1-SNAPSHOT")
 
     "api"(project(":worldedit-libs:core"))
     "compileOnly"(libs.trueZip)
